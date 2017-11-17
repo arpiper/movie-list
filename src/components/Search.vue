@@ -2,14 +2,19 @@
   <div class="movie-search">
     <input v-model="search_query" placeholder="Search Movie Titles" type="text" id="movie-search-input" />
     <div class="movie-search-suggestions">
-      <div v-for="movie in suggestions" >
-        {{ movie.title }}
+      <div v-for="movie in suggestions" class="movie-suggestion">
+        <MovieListing
+          :movie="movie"
+          type="suggestion">
+        </MovieListing>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import MovieListing from "./MovieListing"
+import { mapState } from "vuex"
 var _ = require("lodash")
 var axios = require("axios")
 
@@ -25,9 +30,20 @@ export default {
       suggestions: []
     }
   },
+  computed: {
+    ...mapState({
+      config: state => state.config
+    })
+  },
   watch: {
     search_query: function () {
       this.search()
+      let s = JSON.parse(localStorage.getItem("dev_items"))
+      if (s) {
+        this.suggestions = s
+      } else {
+        localStorage.setItem("dev_items", JSON.stringify(this.suggestions))
+      }
     }
   },
   methods: {
@@ -38,7 +54,7 @@ export default {
           let query = this.buildQueryString()
           axios.get(query)
             .then(function (res) {
-              vm.suggestions = res.data.results
+              vm.suggestions = res.data.results.slice(0,5)
             })
             .catch(function (res) {
               vm.suggestions = ['No results found.']
@@ -49,13 +65,16 @@ export default {
     ),
     buildQueryString: function () {
       let qs = this.api
-      qs += "3/search/movie"
+      qs += "search/movie"
       qs += `?api_key=${this.keys.v3}`
       qs += `&query=${this.search_query}`
       console.log(this.keys)
       return qs
     },
   },
+  components: {
+    MovieListing
+  }
 }
 </script>
 
