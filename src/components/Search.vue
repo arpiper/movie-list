@@ -27,7 +27,7 @@ export default {
   data () {
     return {
       search_query: "",
-      suggestions: []
+      suggestions: undefined
     }
   },
   computed: {
@@ -38,11 +38,8 @@ export default {
   watch: {
     search_query: function () {
       this.search()
-      let s = JSON.parse(localStorage.getItem("dev_items"))
-      if (s) {
-        this.suggestions = s
-      } else {
-        localStorage.setItem("dev_items", JSON.stringify(this.suggestions))
+      if (this.search_query.length === 0) {
+        this.suggestions = undefined
       }
     }
   },
@@ -68,7 +65,6 @@ export default {
       qs += "search/movie"
       qs += `?api_key=${this.keys.v3}`
       qs += `&query=${this.search_query}`
-      console.log(this.keys)
       return qs
     },
   },
@@ -82,6 +78,7 @@ export default {
 .movie-search {
   width: 80%;
   margin: 0 auto;
+  position: relative;
 }
 #movie-search-input {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

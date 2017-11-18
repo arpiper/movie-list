@@ -12,6 +12,10 @@
     <!-- to add -->
     <!-- NewReleases -->
     <!-- my watch list -->
+    <WatchList
+      :api="api"
+      :config="config">
+    </WatchList>
     <footer>
       <div>
         <p>
@@ -26,6 +30,7 @@
 <script>
 import Search from "./components/Search.vue"
 import Results from "./components/Results.vue"
+import WatchList from "./components/WatchList.vue"
 import keys from "../tmdbapi.json"
 var axios = require("axios")
 
@@ -67,7 +72,8 @@ export default {
   },
   components: {
     Search,
-    Results
+    Results,
+    WatchList,
   }
 }
 </script>
