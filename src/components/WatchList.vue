@@ -7,7 +7,7 @@
           <div class="movie-listing-collapsed">
             <span class="title">{{ movie.title }}</span>
             <span class="watched checkmark"></span>
-            <span class="chevron" @click="toggleMovie(evt, index)"></span>
+            <span class="chevron" @click="toggleMovie($event, index)"></span>
           </div>
           <MovieListing
             :movie="movie"
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     toggleMovie: function (evt, index) {
-      this.$store.commit('showMovie',index)
+      this.$store.commit('toggleMovie',index)
     },
     ...mapMutations({
       showMovie: 'toggleMovie',

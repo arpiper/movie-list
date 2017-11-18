@@ -38,8 +38,11 @@ html, body {
   outline: none;
 }
 
-.checkmart {
+.checkmark,
+.chevron {
   display: inline-block;
+  padding: 0 10px;
+  margin-top: -10px;
 }
 .checkmark.checked:after {
   border-color: green;
@@ -54,15 +57,12 @@ html, body {
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
-.chevron {
-  display: inline-block;
-}
 .chevron:after {
   content: "";
   display: block;
   width: 20px;
   height: 20px;
-  border: #ccc;
+  border: solid #aaa;
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
