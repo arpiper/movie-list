@@ -58,11 +58,11 @@ export default {
           })
           .then((res) => {
             vm.config = res.data
-            localStorage.setItem("movie_list_config", JSON.stringify(this.config))
+            localStorage.setItem("movie_list_config", JSON.stringify(vm.config))
+            vm.$store.commit("setConfig", vm.config)
           })
           .catch((res) => console.error(res))
       }
-      this.$store.commit("setConfig", this.config)
     },
   },
   created () {

@@ -2,7 +2,7 @@
   <div class="movie-listing">
     <div v-if="type === 'suggestion'" class="suggestion">
       <div class="poster">
-        <img :src="buildPosterUrl(movie.poster_path, 2)" :alt="movie.title" />
+        <img :src="buildPosterUrl(movie.poster_path, 1)" :alt="movie.title" />
       </div>
       <div class="info">
         <h3>{{ movie.title }}</h3>
@@ -13,8 +13,10 @@
         </span>
       </div>
     </div>
+
     <div v-else-if="type === 'modal'" class="movie-container">
     </div>
+
     <div v-else-if="type === 'watch_list'">
       <div v-show="!collapsed" class="watch-list">
         <div class="poster">
@@ -80,9 +82,6 @@ export default {
   flex: 1;
   width: 100%;
 }
-.suggestion {
-  position: absolute;
-}
 .suggestion div {
   padding: 0 10px;
 }
@@ -97,6 +96,7 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   align-content: flex-start;
+  flex: 1;
 }
 .watched,
 .add-movie-to-list {

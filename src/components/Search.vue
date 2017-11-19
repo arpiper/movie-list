@@ -51,6 +51,7 @@ export default {
           let query = this.buildQueryString()
           axios.get(query)
             .then(function (res) {
+              console.log(res.data.results)
               vm.suggestions = res.data.results.slice(0,5)
             })
             .catch(function (res) {
@@ -79,6 +80,11 @@ export default {
   width: 80%;
   margin: 0 auto;
   position: relative;
+}
+.movie-search-suggestions {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
 }
 #movie-search-input {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
