@@ -13,8 +13,7 @@
     <!-- NewReleases -->
     <!-- my watch list -->
     <WatchList
-      :api="api"
-      :config="config">
+      :api="api">
     </WatchList>
     <footer>
       <div>
@@ -48,6 +47,7 @@ export default {
       let c = JSON.parse(localStorage.getItem("movie_list_config"))
       if (c) {
         this.config = c
+        this.$store.commit("setConfig", c)
       } else {
         let vm = this
         console.log('api call - App -> Create -> setConfig')
@@ -85,12 +85,17 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  background: #eee;
+  height: 100%;
+  width: 80%;
+  margin: 0 auto;
 }
-
+header,
+footer {
+}
 h1, h2 {
   font-weight: normal;
 }

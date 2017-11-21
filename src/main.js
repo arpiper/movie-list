@@ -24,7 +24,7 @@ const store = new Vuex.Store({
         w = JSON.parse(state.watchList)
       }
       // add custom values to store
-      movie.collapsed = true
+      // movie.collapsed = true
       movie.watched = false
       movie.watched_on = undefined
       w.push(movie)
@@ -36,6 +36,17 @@ const store = new Vuex.Store({
       w[index].collapsed = !w[index].collapsed
       state.watchList = JSON.stringify(w)
       localStorage.setItem("movie_watch_list", JSON.stringify(w))
+    },
+    toggleWatched (state, movie, index) {
+      let wl = JSON.parse(state.watchList)
+      let i = wl.findIndex((mov) => mov.id === movie.id)
+      movie.watched = !movie.watched
+      if (movie.watched) {
+        movie.watched_on = new Date()
+      }
+      wl[i] = movie
+      state.watchList = JSON.stringify(wl)
+      localStorage.setItem("movie_watch_list", JSON.stringify(wl))
     },
   },
   actions: {

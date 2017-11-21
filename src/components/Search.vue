@@ -4,6 +4,8 @@
     <div class="movie-search-suggestions">
       <div v-for="movie in suggestions" class="movie-suggestion">
         <MovieListing
+          :api="api"
+          :keys="keys"
           :movie="movie"
           type="suggestion">
         </MovieListing>
@@ -51,7 +53,6 @@ export default {
           let query = this.buildQueryString()
           axios.get(query)
             .then(function (res) {
-              console.log(res.data.results)
               vm.suggestions = res.data.results.slice(0,5)
             })
             .catch(function (res) {
@@ -80,6 +81,7 @@ export default {
   width: 80%;
   margin: 0 auto;
   position: relative;
+  background-color: #eee;
 }
 .movie-search-suggestions {
   position: absolute;
