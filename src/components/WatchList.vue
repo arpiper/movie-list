@@ -4,8 +4,8 @@
     <div v-for="(movie, index) in getWatchList" :id="movie.id">
       <div class="movie-listing-bar">
         <span class="title">{{ movie.title }}</span>
-        <span class="checkmark" :class="{ watched: movie.watched }" @click="watched(movie)"></span>
-        <span class="chevron" @click="toggleMovie($event)"></span>
+        <span class="checkmark" :class="{ watched: movie.watched }" @click="toggleWatched(movie)"></span>
+        <span class="chevron" @click="showMovie($event)"></span>
       </div>
       <MovieListing
         class="watch-list-movie-listing"
@@ -32,17 +32,11 @@ export default {
     ]),
   },
   methods: {
-    toggleMovie: function (evt) {
+    showMovie: function (evt) {
       let el = evt.target.parentElement.nextElementSibling
       el.classList.toggle("show")
       evt.target.classList.toggle("up")
     },
-    watched: function (movie) {
-      this.toggleWatched(movie)
-    },
-    ...mapMutations({
-      showMovie: 'toggleMovie',
-    }),
     ...mapMutations([
       "toggleWatched"
     ])

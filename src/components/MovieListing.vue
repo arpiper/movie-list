@@ -25,7 +25,8 @@
           <span class="overview">{{ movie.overview }}</span>
           <span class="imdb-link">[imdb-link]</span>
           <span class="watched">
-            <button class="button add">Watched</button>
+            <span v-if="movie.watched">You watched this movie on {{ movie.watched_on }}</span>
+            <button class="button add" @click="toggleWatched(movie)">Watched</button>
           </span>
         </div>
       </div>
@@ -79,7 +80,10 @@ export default {
     },
     ...mapMutations({
       commitMovie: "addMovieToList",
-    })
+    }),
+    ...mapMutations([
+      "toggleWatched"
+    ])
   },
   components: {
     Modal,

@@ -42,7 +42,7 @@ const store = new Vuex.Store({
       let i = wl.findIndex((mov) => mov.id === movie.id)
       movie.watched = !movie.watched
       if (movie.watched) {
-        movie.watched_on = new Date()
+        movie.watched_on = new Date().toDateString()
       }
       wl[i] = movie
       state.watchList = JSON.stringify(wl)

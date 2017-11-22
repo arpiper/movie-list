@@ -51,7 +51,6 @@ html, body {
 }
 .chevron.up:after {
   transform: rotate(225deg);
-  transition: rotate .25s;
 }
 .checkmark.watched:after,
 .checkmark.checked:after {
@@ -75,4 +74,5 @@ html, body {
   border: solid #aaa;
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
+  transition: transform .25s;
 }
