@@ -76,3 +76,41 @@ html, body {
   transform: rotate(45deg);
   transition: transform .25s;
 }
+.magnifying-glass {
+  font-size: 2em;
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  border: 0.1em solid #aaa;
+  position: relative;
+  border-radius: 0.35em;
+}
+.magnifying-glass:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  right: -0.25em;
+  bottom: -0.1em;
+  border-width: 0;
+  background: #aaa;
+  width: 0.3em;
+  height: 0.08em;
+  transform: rotate(45deg);
+}
+.cross-x {
+  background: #aaa;
+  height: 1.5em;
+  width: 0.25em;
+  position: relative;
+  display: inline-block;
+  transform: rotate(45deg);
+}
+.cross-x:after {
+  position: absolute;
+  background: #aaa;
+  content: "";
+  height: 0.25em;
+  left: -0.625em;
+  top: 0.625em;
+  width: 1.5em;
+}

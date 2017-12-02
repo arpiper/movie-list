@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <header>
+    <header ref="header">
       <div class="title">
-        <h2>This is where a name/title goes</h2>
+        <h2>Movie Watch List</h2>
       </div>
     </header>
     <Search
@@ -96,7 +96,14 @@ export default {
 header,
 footer {
 }
+header {
+  height: 70px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
 h1, h2 {
+  margin: 0;
   font-weight: normal;
 }
 

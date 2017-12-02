@@ -26,7 +26,12 @@
           <span class="imdb-link">[imdb-link]</span>
           <span class="watched">
             <span v-if="movie.watched">You watched this movie on {{ movie.watched_on }}</span>
-            <button class="button add" @click="toggleWatched(movie)">Watched</button>
+            <button 
+              class="button" 
+              :class="{ add: movie.watched }" 
+              @click="toggleWatched(movie)">
+              Watched
+            </button>
           </span>
         </div>
       </div>
@@ -73,6 +78,7 @@ export default {
       })
       .then((res) => {
         vm.commitMovie(res.data)
+        vm.$emit("movieAdded")
       })
       .catch((res) => console.error(res))
     },
