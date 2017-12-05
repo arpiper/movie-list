@@ -1,6 +1,5 @@
 <template>
   <div class="my-watch-list">
-    <h2>Watch List</h2>
     <div v-for="(movie, index) in getWatchList" :id="movie.id">
       <div class="movie-listing-bar">
         <span class="title">{{ movie.title }}</span>

@@ -35,11 +35,11 @@
             <a :href="createIMDBLink(movie)" target="_blank">IMDB</a>
           </span>
           <div class="buttons">
+            <span v-if="movie.watched">You watched this movie on {{ movie.watched_on }}</span>
             <span class="remove">
               <button class="button alert" @click="removeMovie(movie)">Remove from List</button>
             </span>
             <span class="watched">
-              <span v-if="movie.watched">You watched this movie on {{ movie.watched_on }}</span>
               <button 
                 class="button" 
                 :class="{ add: !movie.watched }" 
