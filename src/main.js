@@ -48,6 +48,13 @@ const store = new Vuex.Store({
       state.watchList = JSON.stringify(wl)
       localStorage.setItem("movie_watch_list", JSON.stringify(wl))
     },
+    removeMovie (state, movie) {
+      let wl = JSON.parse(state.watchList)
+      let i = wl.findIndex((m) => m.id === movie.id)
+      wl.splice(i, 1)
+      state.watchList = JSON.stringify(wl)
+      localStorage.setItem("movie_watch_list", JSON.stringify(wl))
+    }
   },
   actions: {
     addMovieToList (context, movie) {

@@ -34,7 +34,12 @@ export default {
   methods: {
     showMovie: function (evt) {
       let el = evt.target.parentElement.nextElementSibling
-      el.classList.toggle("show")
+      //el.classList.toggle("show")
+      if (el.style.height === "") {
+        el.style.height = `${el.scrollHeight}px`
+      } else {
+        el.style.height = ""
+      }
       evt.target.classList.toggle("up")
     },
     ...mapMutations([
@@ -82,5 +87,11 @@ export default {
 }
 .movie-listing-bar .chevron {
   margin-left: auto;
+}
+@media screen and (max-width: 480px) {
+  .my-watch-list {
+    width: 100%;
+    padding: 5px;
+  }
 }
 </style>

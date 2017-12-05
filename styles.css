@@ -9,6 +9,9 @@ html, body {
   background-color: #323232;
 }
 
+.hidden {
+  display: none;
+}
 /*
  * Button Styles
  */
@@ -20,11 +23,19 @@ html, body {
   background-color: #bbb;
   font-weight: bold;
 }
+.button.med {
+  width: auto;
+  height: 35px;
+}
+.button.small {
+  width: auto;
+  height: 25px;
+}
 .button.add {
   background-color: green;
   border-color: green;
 }
-.button.remove {
+.button.alert {
   background-color: red;
   border-color: red;
 }
@@ -113,4 +124,36 @@ html, body {
   left: -0.625em;
   top: 0.625em;
   width: 1.5em;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  padding: 0;
+}
+.loading .maskedCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 12px;
+  border: 3px solid #444;
+}
+.loading .mask {
+  width: 12px;
+  height: 12px;
+  overflow: hidden;
+}
+.loading .spinner {
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  width: 26px;
+  height: 26px;
+  animation: spin 1s infinite linear;
 }

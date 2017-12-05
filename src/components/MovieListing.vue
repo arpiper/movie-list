@@ -1,15 +1,23 @@
 <template>
   <div class="movie-listing">
     <div v-if="type === 'suggestion'" class="suggestion">
-      <div class="poster clic-details" @click="showMovieDetails(movie)">
+      <div class="poster click-details" @click="showMovieDetails(movie)">
         <img :src="buildPosterUrl(movie.poster_path, 1)" :alt="movie.title" />
       </div>
       <div class="info">
         <h3 @click="showMovieDetails(movie)" class="click-details">{{ movie.title }}</h3>
         <span class="release-date">Released {{ movie.release_date }}</span>
-
+        <span ref="dup" class="duplicate">Movie Already On List</span>
         <span class="add-movie-to-list">
-          <button @click="addMovieToList(movie)" class="button add">Add Movie</button>
+          <button @click="addMovieToList(movie, $event)" class="button add">Add Movie</button>
+          <div class="loading hidden">
+            <div class="spinner">
+              <div class="mask">
+                <div class="maskedCircle">
+                </div>
+              </div>
+            </div>
+          </div>
         </span>
       </div>
     </div>
@@ -23,16 +31,23 @@
           <span class="rating">{{ movie.vote_average }}</span>
           <span class="release-date">Released {{ movie.release_date }}</span>
           <span class="overview">{{ movie.overview }}</span>
-          <span class="imdb-link">[imdb-link]</span>
-          <span class="watched">
-            <span v-if="movie.watched">You watched this movie on {{ movie.watched_on }}</span>
-            <button 
-              class="button" 
-              :class="{ add: movie.watched }" 
-              @click="toggleWatched(movie)">
-              Watched
-            </button>
+          <span class="imdb-link">
+            <a :href="createIMDBLink(movie)" target="_blank">IMDB</a>
           </span>
+          <div class="buttons">
+            <span class="remove">
+              <button class="button alert" @click="removeMovie(movie)">Remove from List</button>
+            </span>
+            <span class="watched">
+              <span v-if="movie.watched">You watched this movie on {{ movie.watched_on }}</span>
+              <button 
+                class="button" 
+                :class="{ add: !movie.watched }" 
+                @click="toggleWatched(movie)">
+                Watched
+              </button>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -41,7 +56,7 @@
 
 <script>
 import Modal from "./Modal.vue"
-import { mapState, mapMutations, mapActions } from "vuex"
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex"
 var axios = require("axios")
 
 export default {
@@ -60,7 +75,10 @@ export default {
   computed: {
     ...mapState({
       config: state => state.config
-    })
+    }),
+    ...mapGetters([
+      "getWatchList",
+    ])
   },
   methods: {
     buildPosterUrl: function (poster_path, size) {
@@ -69,8 +87,17 @@ export default {
       u += poster_path
       return u
     },
-    addMovieToList: function (movie) {
+    createIMDBLink: function (movie) {
+      return `http://www.imdb.com/title/${ movie.imdb_id }`
+    },
+    addMovieToList: function (movie, evt) {
+      if (this.getWatchList.findIndex((m) => m.id === movie.id) >= 0) {
+        this.$refs.dup.style.display = "inline-block"
+        return
+      }
+      let spinner = evt.target.nextElementSibling
       let vm = this
+      spinner.style.display = "block"
       axios.get(`${this.api}movie/${movie.id}`, {
         params: {
           api_key: this.keys.v3
@@ -79,6 +106,7 @@ export default {
       .then((res) => {
         vm.commitMovie(res.data)
         vm.$emit("movieAdded")
+        spinner.style.display = "none"
       })
       .catch((res) => console.error(res))
     },
@@ -88,7 +116,8 @@ export default {
       commitMovie: "addMovieToList",
     }),
     ...mapMutations([
-      "toggleWatched"
+      "toggleWatched",
+      "removeMovie",
     ])
   },
   components: {
@@ -137,9 +166,36 @@ span.watched,
 span.add-movie-to-list {
   padding: 10px;
   align-self: flex-end;
-  margin-top: auto;
+}
+.add-movie-to-list {
+  position: relative;
 }
 .click-details {
   cursor: pointer;
+}
+.duplicate {
+  display: none;
+}
+span.remove {
+  padding: 10px;
+  margin-top: auto;
+}
+.buttons {
+  margin-top: auto;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+@media screen and (max-width: 480px) {
+  .watch-list,
+  .suggestion {
+    flex-direction: column;
+  }
+  h3 {
+    margin: 0;
+  }
+  .add-movie-to-list {
+    margin: 0 auto;
+  }
 }
 </style>

@@ -89,7 +89,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   background: #eee;
-  height: 100%;
+  min-height: 100%;
   width: 80%;
   margin: 0 auto;
 }
@@ -119,5 +119,10 @@ li {
 
 a {
   color: #42b983;
+}
+@media screen and (max-width: 480px) {
+  #app {
+    width: 100%;
+  }
 }
 </style>
