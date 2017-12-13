@@ -91,7 +91,7 @@ export default {
       return `http://www.imdb.com/title/${ movie.imdb_id }`
     },
     addMovieToList: function (movie, evt) {
-      if (this.getWatchList.findIndex((m) => m.id === movie.id) >= 0) {
+      if (this.getWatchList && this.getWatchList.findIndex((m) => m.id === movie.id) >= 0) {
         this.$refs.dup.style.display = "inline-block"
         return
       }

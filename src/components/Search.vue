@@ -9,11 +9,12 @@
     <span 
       class="clear-icon cross-x" 
       :class="{ hide: !suggestions }"
-      @click="clearSearch();">
+      @click="clearSearch()">
     </span>
     <div class="movie-search-suggestions" ref="suggestions">
       <div v-for="movie in suggestions" class="movie-suggestion">
         <MovieListing
+          @movieAdded="clearSearch()"
           :api="api"
           :keys="keys"
           :movie="movie"
@@ -95,7 +96,6 @@ export default {
     },
   },
   created () {
-    this.$on("movieAdded", this.clearSearch)
   },
   components: {
     MovieListing
