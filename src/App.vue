@@ -5,6 +5,7 @@
         <h2>Movie Watch List</h2>
       </div>
     </header>
+    <NewReleases :api="api" :keys="keys"></NewReleases>
     <Search
       :api="api"
       :keys="keys"></Search>
@@ -30,6 +31,7 @@
 import Search from "./components/Search.vue"
 import Results from "./components/Results.vue"
 import WatchList from "./components/WatchList.vue"
+import NewReleases from "./components/NewReleases.vue"
 import keys from "../tmdbapi.json"
 var axios = require("axios")
 
@@ -74,6 +76,7 @@ export default {
     Search,
     Results,
     WatchList,
+    NewReleases,
   }
 }
 </script>
