@@ -52,6 +52,7 @@ export default {
       let d2 = `${t.getFullYear()}-${t.getMonth() + 1}-${t.getDate()}`
       let q = this.api + "discover/movie"
       q += `?api_key=${this.keys.v3}&include_adult=false&language=en-US&region=US`
+      q += `&sort_by=release_date.asc`
       q += `&primary_release_date.gte=${d1}`
       q += `&primary_release_date.lte=${d2}`
       console.log(q)
@@ -72,14 +73,18 @@ export default {
 <style scoped>
 .new-releases {
   padding: 0 40px;
+  width: 90%
 }
 .new-releases,
 .new-releases div {
-  width: 90%;
   margin: 0 auto;
   display: flex;
 }
 .new-releases div {
   overflow: hidden;
+  width: auto;
+}
+.new-releases div .movie-listing {
+  flex: 1 0 auto;
 }
 </style>

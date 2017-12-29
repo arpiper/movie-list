@@ -166,6 +166,9 @@ export default {
   align-items: center;
   align-content: center;
 }
+.title {
+  font-weight: bold;
+}
 .info {
   display: flex;
   flex-direction: column;
