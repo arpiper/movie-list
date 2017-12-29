@@ -5,7 +5,7 @@
         <h2>Movie Watch List</h2>
       </div>
     </header>
-    <NewReleases :api="api" :keys="keys"></NewReleases>
+    <NewReleases></NewReleases>
     <Search
       :api="api"
       :keys="keys"></Search>
@@ -52,7 +52,6 @@ export default {
         this.$store.commit("setConfig", c)
       } else {
         let vm = this
-        console.log('api call - App -> Create -> setConfig')
         axios.get(`${this.api}configuration`, {
             params: {
               api_key: this.keys.v3
@@ -65,6 +64,8 @@ export default {
           })
           .catch((res) => console.error(res))
       }
+      this.$store.commit("setApi", this.api)
+      this.$store.commit("setKeys", this.keys)
     },
   },
   created () {

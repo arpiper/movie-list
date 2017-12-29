@@ -22,6 +22,14 @@
       </div>
     </div>
 
+    <div v-else-if="type === 'new_release'">
+      <div class="new-release">
+        <img class="poster" :src="buildPosterUrl(movie.poster_path, 0)" :alt="movie.title" />
+        <span class="release-date">{{ movie.release_date }}</span>
+        <span class="title">{{ movie.title }}</span>
+      </div>
+    </div>
+
     <div v-else-if="type === 'watch_list'">
       <div v-show="!collapsed" class="watch-list">
         <div class="poster">
@@ -82,6 +90,9 @@ export default {
   },
   methods: {
     buildPosterUrl: function (poster_path, size) {
+      if (!poster_path) {
+        return ""
+      }
       let u = this.config.images.base_url
       u += this.config.images.poster_sizes[size]
       u += poster_path
@@ -141,10 +152,15 @@ export default {
 .watch-list {
   transition: all 1s;
 }
-.suggestion div {
+.suggestion div,
+.new-release {
   padding: 0 10px;
 }
-.poster {
+.new-release {
+  font-size: 10pt;
+}
+.poster,
+.new-release {
   display: flex;
   flex-direction: column;
   align-items: center;

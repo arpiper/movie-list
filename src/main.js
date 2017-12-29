@@ -6,6 +6,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    api: undefined,
+    keys: undefined,
     config: undefined,
     watchList: localStorage.getItem("movie_watch_list")
   },
@@ -15,6 +17,12 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
+    setApi (state, api) {
+      state.api = api
+    },
+    setKeys (state, keys) {
+      state.keys = keys
+    },
     setConfig (state, config) {
       state.config = config
     },
