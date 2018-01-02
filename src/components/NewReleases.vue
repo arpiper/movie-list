@@ -65,12 +65,24 @@ export default {
     slideRight: function () {
       console.log(this.$refs.new_releases_list)
       let x = this.$refs.new_releases_list.style.transform
+      console.log(x)
       if (!x) {
         x = `translateX(-200px)`
       } else {
-        x 
+        x = parseInt(x.split("(")[1])
+        x = `translate(${x - 200}px)`
+      }
+      this.$refs.new_releases_list.style.transform = x
     },
     slideLeft: function () {
+      let e = this.$refs.new_releases_list
+      if (!e.style.transform || e.scrollWidth) {
+        return
+      } else {
+        x = parseInt(x.split("(")[1])
+        x = `translate(${x + 200}px)`
+      }
+      this.$refs.new_releases_list.style.transform = x
     },
   },
   created () {
@@ -97,6 +109,7 @@ export default {
 }
 .new-releases-list {
   position: relative;
+  transition: 1s transform;
 }
 .slide-left, 
 .slide-right {
@@ -113,6 +126,6 @@ export default {
   opacity: 1;
 }
 .movie-listing {
-  flex: 1 0 auto;
+  flex: 1 0 200px;
 }
 </style>

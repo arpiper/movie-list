@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import Modal from "./Modal.vue"
+//import Modal from "./Modal.vue"
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex"
 var axios = require("axios")
 
@@ -132,7 +132,7 @@ export default {
     ])
   },
   components: {
-    Modal,
+    //Modal,
   }
 }
 </script>
