@@ -24,7 +24,7 @@
 
     <div v-else-if="type === 'new_release'">
       <div class="new-release">
-        <img class="poster" :src="buildPosterUrl(movie.poster_path, 0)" :alt="movie.title" />
+        <img @click="showMovieDetails(movie)" class="poster" :src="buildPosterUrl(movie.poster_path, 0)" :alt="movie.title" />
         <span class="release-date">{{ movie.release_date }}</span>
         <span class="title">{{ movie.title }}</span>
       </div>
@@ -122,6 +122,7 @@ export default {
       .catch((res) => console.error(res))
     },
     showMovieDetails: function (movie) {
+      this.$emit("movieSelected", movie)
     },
     ...mapMutations({
       commitMovie: "addMovieToList",

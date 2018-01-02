@@ -2,9 +2,10 @@
   <div class="new-releases">
     <div class="slide-left chevron left" @click="slideLeft()"></div>
     <div class="mask">
-      <div class="new-releases-list" ref="new_releases_list">
+      <div class="new-releases-list" ref="nrl">
         <MovieListing
           v-for="(movie,index) in new_releases"
+          @movieSelected="selectMovie(movie)"
           :key="index"
           :api="api"
           :keys="keys"
@@ -63,27 +64,29 @@ export default {
       return q
     },
     slideRight: function () {
-      console.log(this.$refs.new_releases_list)
-      let x = this.$refs.new_releases_list.style.transform
-      console.log(x)
-      if (!x) {
-        x = `translateX(-200px)`
-      } else {
-        x = parseInt(x.split("(")[1])
-        x = `translate(${x - 200}px)`
+      let x = parseInt(this.$refs.nrl.style.transform.split("(")[1])
+      if (Math.abs(x) >= (this.$refs.nrl.scrollWidth - this.$refs.nrl.offsetWidth)) {
+        return
       }
-      this.$refs.new_releases_list.style.transform = x
+      if (!x) {
+        x = `translateX(-150px)`
+      } else {
+        x = `translate(${x - 150}px)`
+      }
+      this.$refs.nrl.style.transform = x
     },
     slideLeft: function () {
-      let e = this.$refs.new_releases_list
-      if (!e.style.transform || e.scrollWidth) {
+      let x = parseInt(this.$refs.nrl.style.transform.split("(")[1])
+      if (!x) {
         return
       } else {
-        x = parseInt(x.split("(")[1])
-        x = `translate(${x + 200}px)`
+        x = `translate(${x + 150}px)`
+        this.$refs.nrl.style.transform = x
       }
-      this.$refs.new_releases_list.style.transform = x
     },
+    selectMovie: function (movie) {
+      this.$emit("movieSelected", movie)
+    }
   },
   created () {
     this.getNewReleases();
@@ -126,6 +129,7 @@ export default {
   opacity: 1;
 }
 .movie-listing {
-  flex: 1 0 200px;
+  flex: 1 0 150px;
+  cursor: pointer;
 }
 </style>

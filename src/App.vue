@@ -5,7 +5,7 @@
         <h2>Movie Watch List</h2>
       </div>
     </header>
-    <NewReleases></NewReleases>
+    <NewReleases @movieSelected="showMovie($event)"></NewReleases>
     <Search
       :api="api"
       :keys="keys"></Search>
@@ -16,6 +16,7 @@
     <WatchList
       :api="api">
     </WatchList>
+    <Modal v-if="selected_movie" :movie="selected_movie"></Modal>
     <footer>
       <div>
         <p>
@@ -32,6 +33,7 @@ import Search from "./components/Search.vue"
 import Results from "./components/Results.vue"
 import WatchList from "./components/WatchList.vue"
 import NewReleases from "./components/NewReleases.vue"
+import Modal from "./components/Modal.vue"
 import keys from "../tmdbapi.json"
 var axios = require("axios")
 
@@ -42,6 +44,7 @@ export default {
       keys: keys.keys,
       api: "https://api.themoviedb.org/3/",
       config: undefined,
+      selected_movie: undefined,
     }
   },
   methods: {
@@ -67,6 +70,9 @@ export default {
       this.$store.commit("setApi", this.api)
       this.$store.commit("setKeys", this.keys)
     },
+    showMovie: function (movie) {
+      this.selected_movie = movie
+    },
   },
   created () {
     if (!this.config) {
@@ -78,6 +84,7 @@ export default {
     Results,
     WatchList,
     NewReleases,
+    Modal,
   }
 }
 </script>
