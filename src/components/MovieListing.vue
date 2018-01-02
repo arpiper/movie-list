@@ -24,9 +24,13 @@
 
     <div v-else-if="type === 'new_release'">
       <div class="new-release">
-        <img @click="showMovieDetails(movie)" class="poster" :src="buildPosterUrl(movie.poster_path, 0)" :alt="movie.title" />
+        <img 
+          class="poster" 
+          @click="showMovieDetails(movie)" 
+          :src="buildPosterUrl(movie.poster_path, 0)" 
+          :alt="movie.title" />
         <span class="release-date">{{ movie.release_date }}</span>
-        <span class="title">{{ movie.title }}</span>
+        <span @click="showMovieDetails(movie)" class="title">{{ movie.title }}</span>
       </div>
     </div>
 
@@ -36,8 +40,9 @@
           <img :src="buildPosterUrl(movie.poster_path, 2)" />
         </div>
         <div class="info">
-          <span class="rating">{{ movie.vote_average }}</span>
+          <span class="rating">Rating: {{ movie.vote_average }}</span>
           <span class="release-date">Released {{ movie.release_date }}</span>
+          <span class="runtime">Runtime: {{ movie.runtime }}</span>
           <span class="overview">{{ movie.overview }}</span>
           <span class="imdb-link">
             <a :href="createIMDBLink(movie)" target="_blank">IMDB</a>
@@ -59,6 +64,36 @@
         </div>
       </div>
     </div>
+
+    <div v-else-if="type === 'modal'">
+      <div class="movie-container">
+        <div class="poster">
+          <img :src="buildPosterUrl(movie.poster_path, 3)">
+        </div>
+        <div class="info">
+          <span class="release-date">Released: {{ movie.release_date }}</span>
+          <span class="runtime">Runtime: {{ movie.runtime }} minutes</span>
+          <span class="overview">{{ movie.overview }}</span>
+          <span class="imdb-link">
+            <a :href="createIMDBLink(movie)" target="_blank">IMDB</a>
+          </span>
+          <div class="buttons">
+            <span class="add-movie-to-list">
+              <button @click="addMovieToList(movie, $event)" class="button add">Add Movie</button>
+              <div class="loading hidden">
+                <div class="spinner">
+                  <div class="mask">
+                    <div class="maskedCircle">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div class="cross-x close" @click="emitClose()"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -70,8 +105,6 @@ var axios = require("axios")
 export default {
   name: "movie-listing",
   props: {
-    api: String,
-    keys: [Object, Array],
     type: String,
     movie: [Object, Array],
     collapsed: Boolean,
@@ -82,7 +115,9 @@ export default {
   },
   computed: {
     ...mapState({
-      config: state => state.config
+      config: state => state.config,
+      api: state => state.api,
+      keys: state => state.keys
     }),
     ...mapGetters([
       "getWatchList",
@@ -121,8 +156,17 @@ export default {
       })
       .catch((res) => console.error(res))
     },
+    getSize: function () {
+      return {
+        w: this.$el.offsetWidth,
+        h: this.$el.offsetHeight
+      }
+    },
     showMovieDetails: function (movie) {
       this.$emit("movieSelected", movie)
+    },
+    emitClose: function () {
+      this.$emit("close")
     },
     ...mapMutations({
       commitMovie: "addMovieToList",
@@ -132,6 +176,11 @@ export default {
       "removeMovie",
     ])
   },
+  mounted () {
+    if (this.type === "modal") {
+      this.$emit("setSize", this.getSize())
+    }
+  },
   components: {
     //Modal,
   }
@@ -140,7 +189,8 @@ export default {
 
 <style scoped>
 .suggestion,
-.watch-list {
+.watch-list,
+.movie-container {
   background-color: #dedede;
   color: #323232;
   width: 100%;
@@ -153,12 +203,18 @@ export default {
 .watch-list {
   transition: all 1s;
 }
+.movie-container {
+}
 .suggestion div,
 .new-release {
   padding: 0 10px;
 }
 .new-release {
   font-size: 10pt;
+}
+.new-release .poster,
+.new-release .title {
+  cursor: pointer;
 }
 .poster,
 .new-release {
@@ -205,6 +261,10 @@ span.remove {
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+.close {
+  margin-right: 10px;
+  cursor: pointer;
 }
 @media screen and (max-width: 480px) {
   .watch-list,

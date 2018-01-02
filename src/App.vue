@@ -16,7 +16,11 @@
     <WatchList
       :api="api">
     </WatchList>
-    <Modal v-if="selected_movie" :movie="selected_movie"></Modal>
+    <Modal 
+      v-if="selected_movie" 
+      @closeModal="closeModal()"
+      :movie_id="selected_movie.id">
+    </Modal>
     <footer>
       <div>
         <p>
@@ -73,6 +77,9 @@ export default {
     showMovie: function (movie) {
       this.selected_movie = movie
     },
+    closeModal: function () {
+      this.selected_movie = undefined
+    }
   },
   created () {
     if (!this.config) {

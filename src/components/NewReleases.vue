@@ -7,8 +7,6 @@
           v-for="(movie,index) in new_releases"
           @movieSelected="selectMovie(movie)"
           :key="index"
-          :api="api"
-          :keys="keys"
           :movie="movie"
           type="new_release">
         </MovieListing>
@@ -130,6 +128,5 @@ export default {
 }
 .movie-listing {
   flex: 1 0 150px;
-  cursor: pointer;
 }
 </style>

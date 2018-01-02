@@ -15,8 +15,6 @@
       <div v-for="movie in suggestions" class="movie-suggestion">
         <MovieListing
           @movieAdded="clearSearch()"
-          :api="api"
-          :keys="keys"
           :movie="movie"
           type="suggestion">
         </MovieListing>
