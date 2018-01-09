@@ -58,7 +58,6 @@ export default {
       q += `&sort_by=primary_release_date.asc`
       q += `&primary_release_date.gte=${d1}`
       q += `&primary_release_date.lte=${d2}`
-      console.log(q)
       return q
     },
     slideRight: function () {

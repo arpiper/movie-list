@@ -4,7 +4,7 @@
       @setSize="setPosition($event)"
       @close="closeModal()"
       @movieAdded="closeModal()"
-      :movie="movie"
+      :movie="movie_full_details"
       refs="ml"
       :style="style_obj"
       type="modal">
@@ -25,11 +25,11 @@ export default {
         top: 0,
         left: 0,
       },
-      movie: undefined
+      movie_full_details: undefined
     }
   },
   props: {
-    movie_id: [Number, String, Object, Array],
+    movie: [Number, String, Object, Array],
   },
   computed: {
     ...mapState({
@@ -39,14 +39,15 @@ export default {
   },
   methods: {
     getMovieDetails: function () {
+      this.movie_full_details = this.movie
       let vm = this
-      axios.get(`${this.api}movie/${this.movie_id}`, {
+      axios.get(`${this.api}movie/${this.movie.id}`, {
         params: {
           api_key: this.keys.v3
         }
       })
       .then( res => {
-        vm.movie = res.data
+        vm.movie_full_movie = res.data
       })
       .catch( res => {
         console.error(res)

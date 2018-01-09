@@ -19,7 +19,7 @@
     <Modal 
       v-if="selected_movie" 
       @closeModal="closeModal()"
-      :movie_id="selected_movie.id">
+      :movie="selected_movie">
     </Modal>
     <footer>
       <div>
