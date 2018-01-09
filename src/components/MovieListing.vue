@@ -71,7 +71,11 @@
           <img :src="buildPosterUrl(movie.poster_path, 3)">
         </div>
         <div class="info">
-          <span class="release-date">Released: {{ movie.release_date }}</span>
+          <span class="title-line">
+            <h2>{{ movie.title }}</h2>
+            <h4>{{ movie.tagline }}</h4>
+          </span>
+          <span class="release-date">Release Date: {{ movie.release_date }}</span>
           <span class="runtime">Runtime: {{ movie.runtime }} minutes</span>
           <span class="overview">{{ movie.overview }}</span>
           <span class="imdb-link">
@@ -128,7 +132,7 @@ export default {
       if (!poster_path) {
         return ""
       }
-      let u = this.config.images.base_url
+      let u = this.config.images.secure_base_url
       u += this.config.images.poster_sizes[size]
       u += poster_path
       return u
