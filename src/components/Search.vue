@@ -90,7 +90,8 @@ export default {
     suggestionsHeight: function () {
       let sb = window.getComputedStyle(this.$refs.searchBox).height
       let h = window.getComputedStyle(this.$parent.$refs.header).height
-      this.$refs.suggestions.style.height = `calc(100vh - ${sb} - ${h})`
+      let nr = window.getComputedStyle(this.$parent.$refs.newReleases.$el).height
+      this.$refs.suggestions.style.height = `calc(100vh - ${sb} - ${h} - ${nr})`
     },
   },
   created () {
@@ -112,7 +113,7 @@ export default {
   position: absolute;
   z-index: 100;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 #movie-search-input {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

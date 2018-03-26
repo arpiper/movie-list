@@ -5,7 +5,8 @@
         <h2>Movie Watch List</h2>
       </div>
     </header>
-    <NewReleases @movieSelected="showMovie($event)"></NewReleases>
+    <NewReleases ref="newReleases" @movieSelected="showMovie($event)">
+    </NewReleases>
     <Search
       :api="api"
       :keys="keys"></Search>
